@@ -21,7 +21,6 @@ public class ConfigUtil {
 	}
 	
 	public static String getProperty(String value) {
-		initialiseProperties();
 		return prop.getProperty(value);
 	}
 }

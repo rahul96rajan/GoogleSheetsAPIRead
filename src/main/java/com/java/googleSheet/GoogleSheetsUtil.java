@@ -28,8 +28,7 @@ public class GoogleSheetsUtil {
 	private static String APPLICATION_NAME = "Google Sheets API Java Util To Get_Data";
 	private static JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
 	private static String TOKENS_DIRECTORY_PATH = "tokens";
-	private static String range = "Test_Sheet!A1:G"; // Yaml
-//	private static String range = ConfigUtil.getProperty("range");
+	private static String range;
 	private static List<String> SCOPES = Collections.singletonList(SheetsScopes.SPREADSHEETS_READONLY);
 	private static String CREDENTIALS_FILE_PATH = "/credentials.json";
 	
@@ -44,10 +43,10 @@ public class GoogleSheetsUtil {
 		return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
 	}
 
-	public static List<List<Object>> pritnAllValues() throws GeneralSecurityException, IOException {
+	public static List<List<Object>> pritnAllValues(String rangeOfSheet, String sheetId) throws GeneralSecurityException, IOException {
+		range = rangeOfSheet;
 		NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-		String spreadsheetId = "1RuCARQct2c5GZsAV8erEoHpYVywCqls7DKFy8Bx1LEI"; // Yaml
-//		String spreadsheetId = ConfigUtil.getProperty("spreadsheetId");
+		String spreadsheetId = sheetId;
 		Sheets service = new Sheets.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
 				.setApplicationName(APPLICATION_NAME).build();
 		ValueRange response = service.spreadsheets().values().get(spreadsheetId, range).execute();
